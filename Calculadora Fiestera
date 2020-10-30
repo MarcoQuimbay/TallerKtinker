@@ -1,0 +1,234 @@
+import tkinter as tk
+from tkinter import ttk
+from tkinter.ttk import Progressbar
+from tkinter.ttk import Checkbutton
+from tkinter import BooleanVar
+from tkinter import Menu
+import time
+
+
+def init_window():
+    window = tk.Tk()
+    window.wm_title("Calculadora")
+    window.geometry = ('400x250')
+
+
+    label = tk.Label(window, text="Calculadora", font=("Arial bold", 15))
+    label.grid(column=0, row=0)
+
+    label_entrada1 = tk.Label(window, text="Ingrese primer numero:", font=("Arial bold", 10))
+    label_entrada1.grid(column=0, row=1)
+
+    label_entrada2 = tk.Label(window, text="Ingrese primer numero:", font=("Arial bold", 10))
+    label_entrada2.grid(column=0, row=2)
+
+    entrada1 = tk.Entry(window, width=22)
+    entrada2 = tk.Entry(window, width=22)
+
+    entrada1.focus()
+    entrada2.focus()
+
+    entrada1.grid(column=1, row=1)
+    entrada2.grid(column=1, row=2)
+
+    #crear  etiqueta combobox
+    label_operador = tk.Label(window, text = "Escoja un operador", font=("Arial bold", 10))
+    label_operador.grid(column=0, row=3)
+
+    #crear seleccionador combobox
+    combo_operadores = ttk.Combobox(window)
+    #Asignar valores a seleccionar
+    combo_operadores["values"] = ["+", "-", "*", "/", "pow"]
+    #Asignar valor por defecto
+    combo_operadores.current(0)
+    #ubicar seleccionador
+    combo_operadores.grid(column=1, row=3)
+
+    #crear etiqueta de resultados
+    label_resultado = tk.Label(window, text="Resultado: ", font=("Arial bold", 15))
+    label_resultado.grid(column = 0, row = 5)
+    #Crear barra
+    #Personalizar barra
+    style = ttk.Style()
+    style.theme_use('default')
+    style.configure("black.Horizontal.TProgressbar", background='brown')
+    bar = Progressbar(window, length=200, style='black.Horizontal.TProgressbar')
+    bar['value'] = 0
+    #Crear menu
+    menu = Menu(window)
+    new_item = Menu(menu)
+    new_item.add_command(label='Rojo', command= lambda:cambiar_bar_color("rojo"))
+    new_item.add_command(label='Verde', command=lambda: cambiar_bar_color("verde"))
+    new_item.add_command(label='Amarillo', command=lambda: cambiar_bar_color("amarillo"))
+    new_item.add_command(label='Negro', command=lambda: cambiar_bar_color("negro"))
+    menu.add_cascade(label='Cambiar Color', menu=new_item)
+
+    def convertir(n):
+        r = int(n)
+        conv = ""
+        while r >= 16:
+            if r % 16 == 10:
+                conv += "A"
+            elif r % 16 == 11:
+                conv += "B"
+            elif r % 16 == 12:
+                conv += "C"
+            elif r % 16 == 13:
+                conv += "D"
+            elif r % 16 == 14:
+                conv += "E"
+            elif r % 16 == 15:
+                conv += "F"
+            else:
+                conv += str(r % 16)
+            r = r // 16
+        if r % 16 == 10:
+            conv += "A"
+        elif r % 16 == 11:
+            conv += "B"
+        elif r % 16 == 12:
+            conv += "C"
+        elif r % 16 == 13:
+            conv += "D"
+        elif r % 16 == 14:
+            conv += "E"
+        elif r % 16 == 15:
+            conv += "F"
+        else:
+            conv += str(r % 16)
+        return conv[::-1]
+
+    def crazy_mode(inicio, ultimo, incremento, cletra, cfondo):
+        window.wm_title("Modo Fiesta B)")
+        for i in range(inicio, ultimo, incremento):
+            o = convertir(i)
+            if len(o) < 2:
+                a = "#00000" + o
+            elif len(o)<3:
+                a = "#0000" + o
+            elif len(o) < 4:
+                a = "#000" + o
+            elif len(o) < 5:
+                a = "#00" + o
+            elif len(o) < 6:
+                a = "#0" + o
+            else: a = "#"+ o
+
+            window["background"] = a
+            label["background"] = a
+            label_entrada1["background"] = a
+            label_entrada2["background"] = a
+            label_operador["background"] = a
+            label_resultado["background"] = a
+            window.update_idletasks()
+            time.sleep(0.1)
+
+        window.config(bg=cfondo)
+        label.config(bg=cfondo, fg = cletra)
+        label_entrada1.config(bg=cfondo, fg = cletra)
+        label_entrada2.config(bg=cfondo, fg = cletra)
+        label_operador.config(bg=cfondo, fg = cletra)
+        label_resultado.config(bg=cfondo, fg = cletra)
+
+        window.update_idletasks()
+
+    def cambiar_modo(a):
+        if (a.get()):
+            crazy_mode(0,16777200, 200000, "white" , "black")
+            window.wm_title("Calculadora Oscura")
+        else:
+            crazy_mode(16777200, 0, -200000, "black", "lightgray")
+            window.wm_title("Calculadora")
+
+    # Crear check
+    chk_state = BooleanVar()
+    #chk_state.set(False)  # set check state
+    modo_loco = Checkbutton(window,
+                            text='?',
+                            var=chk_state,
+                            onvalue=True,
+                            offvalue=False,
+                            command=lambda: cambiar_modo(chk_state))
+    modo_loco.grid(column=1, row=0)
+
+    # Crear botón
+    boton = tk.Button(window,
+                      command=lambda: click_calk(),
+                      text="Calcular",
+                      bg="Brown",
+                      fg="white")
+    boton.grid(column=1, row=4)
+
+    def cambiar_bar_color(color):
+        if color == "rojo":
+            style.configure("black.Horizontal.TProgressbar", background='red')
+            boton.config(bg = "Red", fg="White")
+            window.update_idletasks()
+        elif color == "verde":
+            style.configure("black.Horizontal.TProgressbar", background='green')
+            boton.config(bg = "Green", fg="White")
+            window.update_idletasks()
+        elif color == "amarillo":
+            style.configure("black.Horizontal.TProgressbar", background='yellow')
+            boton.config(bg = "Yellow", fg="Black")
+            window.update_idletasks()
+        elif color == "negro":
+            style.configure("black.Horizontal.TProgressbar", background='black')
+            boton.config(bg = "Black", fg="White")
+            window.update_idletasks()
+
+    def barra_incrementando():
+        for inc in range (100):
+            bar['value'] = inc
+            window.update_idletasks()
+            time.sleep(0.01)
+        #time.sleep(0.01)
+        #bar['value'] = inc
+    def click_calk():
+        #for i in range (0, 100):
+        barra_incrementando()
+        #bar.stop()
+        click_calcular(
+            label_resultado,
+            entrada1.get(),
+            entrada2.get(),
+            combo_operadores.get(),
+            bar)
+    bar.grid(column = 1, row = 5)
+
+    window.config(menu=menu)
+    window.mainloop()
+
+
+# definir calculadora
+
+def calculadora(num1, num2, operador):
+
+    if operador == "+":
+        resultado = num1 + num2
+    elif operador == "-":
+        resultado = num1 - num2
+    elif operador == "*":
+        resultado = num1 * num2
+    elif operador == "/":
+        resultado = round(num1 / num2, 2)
+    else:
+        resultado = num1 ** num2
+    return resultado
+
+# definir click calcular
+def click_calcular(label, num1, num2, operador, barra):
+
+    # Conversión de valores
+    valor1 = float(num1)
+    valor2 = float(num2)
+
+    # calcular resultado
+    res = calculadora(valor1, valor2, operador)
+
+    "Actualización de texto de la etiqueta"
+    label.configure(text="Resultado: " + str(res))
+
+def main():
+    init_window()
+main()
