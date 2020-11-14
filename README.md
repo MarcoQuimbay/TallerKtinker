@@ -1,5 +1,7 @@
 # TallerKtinker
 Marco Antonio Quimbay Dueñas
+
+
 Calculadora con 3 gatgets diferentes:
   El primero es una barra de carga que muestra simula el estado de carga de los procesos de la calculadora:
   
