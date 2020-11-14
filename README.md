@@ -21,12 +21,15 @@ Calculadora con 3 gatgets diferentes:
 ![Image of Yaktocat](https://github.com/MarcoQuimbay/TallerKtinker/blob/main/Imagenes-Calculadora/Imagen5.PNG)
   
   Como se puede ver en esta imagen, el modo fiesta cambia los colores del fondo en una gran cantidad de colores:
+  
 ![Image of Yaktocat](https://github.com/MarcoQuimbay/TallerKtinker/blob/main/Imagenes-Calculadora/Imagen6.PNG)
   
   Y una vez termina su ciclo que dura aproximadamente 10 segundos cambia entre el modo de visualización normal y el modo oscuro:
+  
 ![Image of Yaktocat](https://github.com/MarcoQuimbay/TallerKtinker/blob/main/Imagenes-Calculadora/Imagen7.PNG)
   
   Cuando desactivamos la caja de check lo que ocurre es que se activa de nuevo el modo fiesta y nos regresa la calculadora a una
   visualización normal (Sin el modo oscuro):
   
 ![Image of Yaktocat](https://github.com/MarcoQuimbay/TallerKtinker/blob/main/Imagenes-Calculadora/Imagen8.PNG)
+![Image of Yaktocat](https://github.com/MarcoQuimbay/TallerKtinker/blob/main/Imagenes-Calculadora/Imagen9.PNG)
